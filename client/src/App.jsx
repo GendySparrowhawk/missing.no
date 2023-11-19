@@ -1,10 +1,34 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useQuery, gql } from '@apollo/client'
+import { useState, useEffect } from 'react'
+import { useStore } from './store'
+
+
+const AUTHENTICATE = gql`
+  query {
+    authenticate {
+      _id
+      email
+      username
+      wishlists {
+        _id
+        name
+      }
+    }
+  }
+`
 
 function App() {
-  const [count, setCount] = useState(0)
+const {loading, error, data: userData } = useQuery(AUTHENTICATE)
+const { setState } = useStore()
+
+useEffect(() => {
+  if(userData) {
+    setState(oldState => ({
+      ...oldState,
+      user: userData.authenticate
+    }))
+  }
+}, [userData])
 
   return (
     <>
