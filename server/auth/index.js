@@ -1,4 +1,4 @@
-const { sign, verify } = require("jswebtoken");
+const { sign, verify } = require("jsonwebtoken");
 const User = require("../models/User");
 
 async function createToken(user_id) {
@@ -7,7 +7,7 @@ async function createToken(user_id) {
 
     return token;
   } catch (error) {
-    console.error("creat token falied in Auth");
+    console.error("create token falied in Auth");
   }
 }
 
